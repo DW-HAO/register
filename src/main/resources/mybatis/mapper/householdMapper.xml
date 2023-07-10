@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.register.dao.HouseholdDao">
+    <resultMap id="HouseholdMap" type="com.register.model.pojo.Household">
+        <id property="id" column="id"/>
+        <result property="householdType" column="household_type"/>
+        <association property="user" javaType="com.register.model.pojo.User">
+            <result property="id" column="user_id"/>
+        </association>
+        <association property="address" javaType="com.register.model.pojo.Address">
+            <result property="id" column="address_id"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="FamilyMemberMap" type="com.register.model.po.FamilyMember">
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="idCardNumber" column="id_card_number"/>
+    </resultMap>
+
+    <select id="getAllHousehold" resultMap="HouseholdMap">
+        select *
+        from `household_table`;
+    </select>
+
+    <select id="getHouseholdByUserId" resultMap="HouseholdMap" parameterType="long">
+        select *
+        from `household_table`
+        where user_id = #{uId}
+    </select>
+
+    <select id="getFamilyMembers" resultMap="FamilyMemberMap" parameterType="long">
+        select u.name, u.gender, u.id_card_number
+        from household_table as h
+                 inner join user_table as u on h.user_id = u.id
+        where h.address_id = #{aId}
+    </select>
+
+    <insert id="addHousehold" parameterType="map">
+        insert into `household_table` (id, household_type, user_id, address_id)
+        values (#{hId}, #{householdType}, #{uId}, #{aId})
+    </insert>
+
+    <update id="updateHouse" parameterType="map">
+        update `household_table`
+        set address_id = #{in_aId}
+        where user_id = #{uId}
+    </update>
+</mapper>

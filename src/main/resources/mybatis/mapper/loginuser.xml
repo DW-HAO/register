@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.register.dao.LoginUserDao">
+    <resultMap id="LoginUserMap" type="com.register.model.pojo.LoginUser">
+        <result property="loginUser" column="login_user"/>
+        <result property="password" column="password"/>
+        <result property="salt" column="salt"/>
+    </resultMap>
+
+    <resultMap id="LoginUserPermissionsMap" type="com.register.model.pojo.LoginUser">
+        <result property="loginUser" column="login_user"/>
+        <collection property="role" ofType="com.register.model.pojo.Role">
+            <result property="roleName" column="role_name"/>
+            <collection property="permissions" ofType="com.register.model.pojo.Permission">
+                <result property="permissionName" column="permission_name"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="getLoginUser" resultMap="LoginUserMap" parameterType="string">
+        select *
+        from `login_user_table`
+        where login_user = #{lu}
+    </select>
+
+    <select id="getPermission" resultMap="LoginUserPermissionsMap" parameterType="string">
+        select *
+        from `login_user_table` as lu
+                 inner join `role_table` as r on lu.roles = r.role_name
+                 inner join `permission_table` as p on r.permissions = p.permission_name
+        where lu.login_user = #{loginUser}
+    </select>
+
+    <insert id="addLoginUser" parameterType="com.register.model.pojo.LoginUser">
+        insert into `login_user_table` (login_user, password, salt, roles)
+        values (#{loginUser}, #{password}, #{salt}, 'user')
+    </insert>
+</mapper>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.register.dao.HouseholdChangeDao">
+    <resultMap id="HouseholdChangeMap" type="com.register.model.pojo.HouseholdChange">
+        <id property="id" column="id"/>
+        <result property="changeDate" column="change_date"/>
+        <result property="changeType" column="change_type"/>
+        <association property="household" javaType="com.register.model.pojo.Household">
+            <result property="householdType" column="household_type"/>
+        </association>
+        <association property="user" javaType="com.register.model.pojo.User">
+            <result property="name" column="name"/>
+        </association>
+        <association property="address" javaType="com.register.model.pojo.Address">
+            <result property="province" column="province"/>
+            <result property="city" column="city"/>
+            <result property="district" column="district"/>
+            <result property="street" column="street"/>
+            <result property="houseNumber" column="house_number"/>
+        </association>
+    </resultMap>
+
+    <select id="getAllHouseholdChange" resultMap="HouseholdChangeMap">
+        select hc.id,
+               u.name,
+               a.province,
+               a.city,
+               a.district,
+               a.street,
+               a.house_number,
+               h.household_type,
+               hc.change_type,
+               hc.change_date
+        from `household_change_table` as hc
+                 inner join `household_table` as h on hc.household_id = h.id
+                 inner join `user_table` as u on hc.user_id = u.id
+                 inner join `address_table` as a on hc.address_id = a.id
+        order by hc.id asc
+    </select>
+
+    <select id="getHouseholdChangeByUserId" resultMap="HouseholdChangeMap" parameterType="long">
+        select hc.id,
+               u.name,
+               a.province,
+               a.city,
+               a.district,
+               a.street,
+               a.house_number,
+               h.household_type,
+               hc.change_type,
+               hc.change_date
+        from `household_change_table` as hc
+                 inner join `household_table` as h on hc.household_id = h.id
+                 inner join `user_table` as u on hc.user_id = u.id
+                 inner join `address_table` as a on hc.address_id = a.id
+        where u.id = #{uId};
+    </select>
+
+    <insert id="changOut" parameterType="map">
+        insert into `household_change_table` (id, household_id, user_id, address_id, change_date, change_type)
+        values (#{out_id}, #{hId}, #{uId}, #{out_aId}, now(), '迁出')
+    </insert>
+
+    <insert id="changIn" parameterType="map">
+        insert into `household_change_table` (id, household_id, user_id, address_id, change_date, change_type)
+        values (#{in_id}, #{hId}, #{uId}, #{in_aId}, now(), '迁入')
+    </insert>
+
+    <delete id="deleteHouseholdChange" parameterType="long">
+        delete
+        from household_change_table
+        where id = #{hcId};
+    </delete>
+</mapper>

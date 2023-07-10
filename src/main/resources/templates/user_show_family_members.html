@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>户籍管理系统</title>
+    <link rel="stylesheet" href="/css/layui.css">
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="fragments/header::header"></div>
+
+    <div th:replace="fragments/menu::menu"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>身份证</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="familyMember : ${familyMembers}">
+                    <td th:text="${familyMember.name}"></td>
+                    <td th:text="${familyMember.gender}"></td>
+                    <td th:text="${familyMember.idCardNumber}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer::footer"></div>
+</div>
+<script src="/layui.js"></script>
+<script>
+    //JS
+    layui.use(['element', 'layer', 'util'], function () {
+        var element = layui.element
+            , layer = layui.layer
+            , util = layui.util
+            , $ = layui.$;
+
+        layui.use('form', function () {
+            var form = layui.form;
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                // layer.msg(JSON.stringify(data.field));
+                return false;
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

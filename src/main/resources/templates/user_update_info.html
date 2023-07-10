@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>户籍管理系统</title>
+    <link rel="stylesheet" href="/css/layui.css">
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="fragments/header::header"></div>
+
+    <div th:replace="fragments/menu::menu"></div>
+
+    <div class="layui-body">
+        <div style="padding: 15px;">
+            <form class="layui-form" th:action="@{/user/updateInfo}" method="post" th:object="${user}">
+                <div style="display: none">
+                    <input type="text" name="id" th:value="*{id}">
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">姓名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" required lay-verify="required" th:value="*{name}"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="gender" value="男" title="男">
+                        <input type="radio" name="gender" value="女" title="女">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">联系方式</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="telephone" required lay-verify="required" th:value="*{telephone}"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">居民身份证</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="idCardNumber" required lay-verify="required" th:value="*{idCardNumber}"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">出生日期</label>
+                    <div class="layui-input-block"> <!-- 注意：这一层元素并不是必须的 -->
+                        <input type="text" name="birth_date" required lay-verify="required"
+                               th:value="*{#dates.format(birthDate, 'yyyy-MM-dd')}"
+                               autocomplete="off" class="layui-input" id="test1">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="submit" class="layui-btn" value="修改"/>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer::footer"></div>
+</div>
+
+<script src="/layui.js"></script>
+<script>
+    //JS
+    layui.use(['element', 'layer', 'util'], function () {
+        var element = layui.element
+            , layer = layui.layer
+            , util = layui.util
+            , $ = layui.$;
+
+
+        layui.use('form', function () {
+            var form = layui.form;
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                // layer.msg(JSON.stringify(data.field));
+                return false;
+            });
+        });
+
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#test1' //指定元素
+                , format: 'yyyy-MM-dd'
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

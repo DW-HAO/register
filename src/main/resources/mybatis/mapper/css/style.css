@@ -1,0 +1,144 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    position: absolute;
+    width: 100%;
+}
+
+.left {
+    height: 700px;
+    width: 1000px;
+    background-color: #2a2a40;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    z-index: -99;
+}
+.right {
+    height: 700px;
+    width: 1000px;
+    background-color: #ffffff;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    z-index: -99;
+}
+
+a {
+    text-decoration: none;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,td{
+    border: 1px solid #999;
+    text-align: center;
+    padding: 20px 0;
+}
+
+table thead tr{
+    background-color: #008c8c;
+    color: #fff;
+}
+
+table tbody tr:nth-child(odd){
+    background-color: #eee;
+}
+
+table tbody tr:hover{
+    background-color: #ccc;
+}
+
+table tbody tr td:first-child{
+    color: #f40;
+}
+
+.header {
+    height: 50px;
+    width: 100%;
+    background-color: #2a2a40;
+    color: #ffba05;
+    position: absolute;
+}
+
+.header p {
+    height: 50px;
+    width: 100px;
+    text-align: center;
+    line-height: 50px;
+    position: absolute;
+}
+
+#loginUser {
+    right: 50px;
+}
+
+#hh {
+    left: 50px;
+}
+
+.center {
+    height: 700px;
+    width: 1500px;
+    background-color: #ffffff;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    margin-left: -750px;
+}
+
+.footer {
+    height: 50px;
+    width: 100%;
+    background-color: #2a2a40;
+    color: #ffba05;
+    position: absolute;
+    top: 750px;
+}
+
+.footer p {
+    text-align: center;
+    line-height: 50px;
+}
+
+.menu {
+    height: 700px;
+    width: 250px;
+    background-color: #2a2a40;
+    padding-top: 50px;
+    position: absolute;
+}
+
+.menu p {
+    width: 150px;
+    height: 50px;
+    border: solid 2px #2a2a40;
+    margin-left: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.menu p:hover {
+    border: solid 2px #ffba05;
+}
+
+.menu p a {
+    color: #ffba05;
+}
+
+.content {
+    width: 1150px;
+    height: 600px;
+    background-color: #ffffff;
+    position: absolute;
+    right: 0;
+    padding: 50px;
+}
+
+

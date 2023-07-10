@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>户籍管理系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-image: url("../../img/bg.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        #login_div {
+            height: 100%;
+            width: 500px;
+            position: absolute;
+            right: 0;
+            background-color: #ffffff;
+            opacity: 65%;
+        }
+
+        #title {
+            height: 50px;
+            width: 500px;
+            text-align: center;
+            line-height: 50px;
+            position: absolute;
+            top: 150px;
+        }
+
+        form {
+            height: 300px;
+            width: 500px;
+            margin-top: -150px;
+            position: absolute;
+            top: 50%;
+        }
+
+        input {
+            width: 50%;
+            height: 100%;
+            border-radius: 10px;
+            outline: none;
+            background-color: #d8dcd8;
+            /*background-color: #ffffff;*/
+            text-align: center;
+            border: none;
+        }
+
+        input:focus {
+            /*background-color: #ffffff;*/
+            background-color: #d8dcd8;
+        }
+
+        #username, #password, #btn {
+            height: 50px;
+            width: 100%;
+            text-align: center;
+            line-height: 50px;
+        }
+
+        #username {
+            position: absolute;
+            top: 50px;
+        }
+
+        #password {
+            margin-top: -25px;
+            position: absolute;
+            top: 50%;
+        }
+
+        #btn {
+            color: #000000;
+            position: absolute;
+            bottom: 50px;
+            opacity: 50%;
+        }
+
+        #msg {
+            height: 50px;
+            width: 500px;
+            text-align: center;
+            line-height: 50px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="login_div">
+    <div id="title">
+        <h2>户籍管理系统</h2>
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <div id="username">
+            <input type="text" name="loginUser" autocomplete="off" placeholder="用户名">
+        </div>
+
+        <div id="password">
+            <input type="password" name="password" autocomplete="off" placeholder="密码">
+        </div>
+
+        <div id="btn">
+            <input type="submit" value="登录">
+        </div>
+        <div id="msg">
+            <p th:text="${msg}"></p>
+        </div>
+    </form>
+</div>
+</body>
+</html>

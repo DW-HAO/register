@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>户籍管理系统</title>
+    <link rel="stylesheet" href="/css/layui.css">
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="fragments/header::header"></div>
+
+    <div th:replace="fragments/menu::menu"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>省份</th>
+                    <th>城市</th>
+                    <th>区县</th>
+                    <th>街道</th>
+                    <th>门牌号</th>
+                    <th>户籍类型</th>
+                    <th>变更类型</th>
+                    <th>变更时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="change : ${changeList}">
+                    <td th:text="${change.user.name}"></td>
+                    <td th:text="${change.address.province}"></td>
+                    <td th:text="${change.address.city}"></td>
+                    <td th:text="${change.address.district}"></td>
+                    <td th:text="${change.address.street}"></td>
+                    <td th:text="${change.address.houseNumber}"></td>
+                    <td th:text="${change.household.householdType}"></td>
+                    <td th:text="${change.changeType}"></td>
+                    <td th:text="${#dates.format(change.changeDate, 'yyyy-MM-dd')}"></td>
+                    <td>
+                        <a th:href="@{'/admin/deleteChange/'+${change.id}}">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer::footer"></div>
+</div>
+<script src="/layui.js"></script>
+<script>
+    //JS
+    layui.use(['element', 'layer', 'util'], function () {
+        var element = layui.element
+            , layer = layui.layer
+            , util = layui.util
+            , $ = layui.$;
+
+        layui.use('form', function () {
+            var form = layui.form;
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                // layer.msg(JSON.stringify(data.field));
+                return false;
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

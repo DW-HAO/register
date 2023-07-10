@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.register.dao.UserDao">
+    <resultMap id="UserInfoMap" type="com.register.model.po.UserInfo">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="telephone" column="telephone"/>
+        <result property="gender" column="gender"/>
+        <result property="idCardNumber" column="id_card_number"/>
+        <result property="birthDate" column="birthdate"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="district" column="district"/>
+        <result property="street" column="street"/>
+        <result property="houseNumber" column="house_number"/>
+        <result property="householdType" column="household_type"/>
+    </resultMap>
+
+    <select id="getAllUser" resultMap="UserInfoMap">
+        select u.id,
+               u.name,
+               u.telephone,
+               u.gender,
+               u.id_card_number,
+               u.birthdate,
+               a.province,
+               a.city,
+               a.district,
+               a.street,
+               a.house_number,
+               h.household_type
+        from `user_table` as u
+                 inner join `household_table` as h on u.id = h.user_id
+                 inner join `address_table` as a on h.address_id = a.id
+    </select>
+
+    <select id="getUserByKey" resultMap="UserInfoMap" parameterType="String">
+        select u.id,
+        u.name,
+        u.telephone,
+        u.gender,
+        u.id_card_number,
+        u.birthdate,
+        a.province,
+        a.city,
+        a.district,
+        a.street,
+        a.house_number,
+        h.household_type
+        from `user_table` as u
+        inner join `household_table` as h on u.id = h.user_id
+        inner join `address_table` as a on h.address_id = a.id
+        <where>
+            <if test="key != null">
+                name like concat('%', #{key}, '%')
+                or id_card_number like concat('%', #{key}, '%')
+            </if>
+        </where>
+    </select>
+
+
+    <insert id="insertUser" parameterType="com.register.model.pojo.User">
+        insert into `user_table` (id, name, telephone, gender, id_card_number, birthdate)
+        values (#{id}, #{name}, #{telephone}, #{gender}, #{idCardNumber}, #{birthDate})
+    </insert>
+
+    <update id="updateUser" parameterType="com.register.model.pojo.User">
+        update `user_table`
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="idCardNumber != null">
+                id_card_number = #{idCardNumber},
+            </if>
+            <if test="birthDate != null">
+                birthdate = #{birthDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

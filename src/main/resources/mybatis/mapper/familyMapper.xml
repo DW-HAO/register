@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.register.dao.FamilyDao">
+    <!--<resultMap id="AddressMap" type="Address">-->
+    <!--    <id property="id" column="id"/>-->
+    <!--    <result property="province" column="province"/>-->
+    <!--    <result property="city" column="city"/>-->
+    <!--    <result property="district" column="district"/>-->
+    <!--    <result property="street" column="street"/>-->
+    <!--    <result property="houseNumber" column="house_number"/>-->
+    <!--</resultMap>-->
+    <resultMap id="FamilyMap" type="com.register.model.pojo.Family">
+        <id property="id" column="id"/>
+        <result property="headName" column="head_name"/>
+        <result property="totalMembers" column="total_members"/>
+        <association property="addressId" javaType="com.register.model.pojo.Address">
+            <id property="id" column="address_id"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="FamilyMemberMap" type="com.register.model.po.FamilyMember">
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="idCardNumber" column="id_card_number"/>
+    </resultMap>
+
+    <select id="getAllFamily" resultMap="FamilyMap">
+        select *
+        from `family_table`;
+    </select>
+
+    <select id="getFamilyMembers" resultMap="FamilyMemberMap">
+
+    </select>
+</mapper>

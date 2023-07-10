@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.register.dao.AddressDao">
+    <resultMap id="AddressMap" type="com.register.model.pojo.Address">
+        <id property="id" column="id"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="district" column="district"/>
+        <result property="street" column="street"/>
+        <result property="houseNumber" column="house_number"/>
+    </resultMap>
+
+    <select id="getAllAddress" resultMap="AddressMap">
+        select *
+        from `address_table`
+    </select>
+
+    <select id="getAddressById" resultMap="AddressMap">
+        select *
+        from `address_table`
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="getAddressId" parameterType="com.register.model.pojo.Address" resultMap="AddressMap">
+        select *
+        from `address_table`
+        where province = #{province}
+          and city = #{city}
+          and district = #{district}
+          and street = #{street}
+          and house_number = #{houseNumber}
+    </select>
+
+    <insert id="insertAddress" parameterType="com.register.model.pojo.Address">
+        insert into `address_table` (id, province, city, district, street, house_number)
+        values (#{id}, #{province}, #{city}, #{district}, #{street}, #{houseNumber})
+    </insert>
+
+    <update id="updateAddress" parameterType="com.register.model.pojo.Address">
+        update `address_table`
+        <set>
+            <if test="province != null">
+                province = #{province},
+            </if>
+            <if test="city != null">
+                city = #{city},
+            </if>
+            <if test="district != null">
+                district = #{district},
+            </if>
+            <if test="street != null">
+                street = #{street},
+            </if>
+            <if test="houseNumber != null">
+                house_number = #{houseNumber},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

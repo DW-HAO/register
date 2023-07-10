@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>户籍管理系统</title>
+    <link rel="stylesheet" href="/css/layui.css">
+    <style type="text/css">
+        #sel {
+            position: relative;
+            height: 50px;
+            width: 300px;
+        }
+
+        #sel_input {
+            position: absolute;
+            left: 0;
+            width: 200px;
+        }
+
+        #sel_button {
+            position: absolute;
+            right: 0;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="fragments/header::header"></div>
+
+    <div th:replace="fragments/menu::menu"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <form method="get" th:action="@{/admin/showUserInfoByKey}">
+                <div id="sel">
+                    <input id="sel_input" type="text" name="key" placeholder="姓名或居民身份证" autocomplete="off"
+                           class="layui-input">
+                    <input id="sel_button" type="submit" class="layui-btn" value="查询">
+                </div>
+            </form>
+
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>电联</th>
+                    <th>性别</th>
+                    <th>身份证</th>
+                    <th>出生</th>
+                    <th>省份</th>
+                    <th>城市</th>
+                    <th>区县</th>
+                    <th>街道</th>
+                    <th>门牌号</th>
+                    <th>户籍类型</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${userInfoList}">
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.telephone}"></td>
+                    <td th:text="${user.gender}"></td>
+                    <td th:text="${user.idCardNumber}"></td>
+                    <td th:text="${#dates.format(user.birthDate, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${user.province}"></td>
+                    <td th:text="${user.city}"></td>
+                    <td th:text="${user.district}"></td>
+                    <td th:text="${user.street}"></td>
+                    <td th:text="${user.houseNumber}"></td>
+                    <td th:text="${user.householdType}"></td>
+                    <td>
+                        <a th:href="@{'/admin/goToChange/'+${user.id}}">变更</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer::footer"></div>
+</div>
+<script src="/layui.js"></script>
+<script>
+    //JS
+    layui.use(['element', 'layer', 'util'], function () {
+        var element = layui.element
+            , layer = layui.layer
+            , util = layui.util
+            , $ = layui.$;
+
+        layui.use('form', function () {
+            var form = layui.form;
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                // layer.msg(JSON.stringify(data.field));
+                return false;
+            });
+        });
+
+    });
+</script>
+</body>
+</html>
